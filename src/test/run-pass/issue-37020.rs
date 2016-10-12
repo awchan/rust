@@ -8,24 +8,18 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-// aux-build:derive-atob.rs
-// aux-build:derive-ctod.rs
+#![allow(private_in_public)]
 
-#![feature(proc_macro)]
+mod foo {
+    pub mod bar {
+        extern crate core;
+    }
+}
 
-#[macro_use]
-extern crate derive_atob;
-#[macro_use]
-extern crate derive_ctod;
-
-#[derive(Copy, Clone)]
-#[derive(AToB)]
-struct A;
-
-#[derive(CToD)]
-struct C;
+mod baz {
+    pub use foo::bar::core;
+}
 
 fn main() {
-    B;
-    D;
+    baz::core::cell::Cell::new(0u32);
 }
